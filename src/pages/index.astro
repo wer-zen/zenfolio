@@ -7,12 +7,12 @@ import Blur from "../assets/Blur.astro";
 ---
 
 <Layout>
-    <Blur />
-    <Background />
     <main
-        class="p-4 flex flex-col flex-wrap lg:p-16 relative md:p-8 sm:p-2 z-10 bg-transparent h-dvh w-full dark justify-between content-center"
+        class="p-4 flex overflow-hidden flex-col flex-wrap lg:p-16 relative md:p-8 sm:p-2 z-10 bg-transparent h-dvh w-full dark justify-between items-center"
         id="main"
     >
+        <Blur />
+        <Background />
         <div class="-mt-10 -ml-2">
             <a href="https://github.com/wer-zen">
                 <img src="/svgs/logo.svg" alt="Logo" height="400" width="400" />
