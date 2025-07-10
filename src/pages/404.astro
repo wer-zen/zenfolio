@@ -1,0 +1,35 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Blurfx from "../assets/Blur.astro";
+import Fonts from "../assets/fonts.astro";
+import Background from "../assets/Background.astro";
+import { Button } from "@/components/ui/button";
+import { IconBrandGithub } from "@tabler/icons-react";
+import { IconBrandDiscord } from "@tabler/icons-react";
+import { IconMail } from "@tabler/icons-react";
+---
+
+<Fonts />
+<Background />
+<Blurfx />
+<Blurfx top="50%" left="70%" />
+<Layout>
+    <main class="bg-transparent">
+        <label id="ohno" class="font-akony">Error 404</label>
+        <label id="return" class="font-uncage"
+            >Are you zenful? Are you worthy?</label
+        >
+        <ul>
+            <a href="https://github.com/wer-zen" id="github">
+                <IconBrandGithub stroke={2} />
+            </a>
+            <label id="discord">
+                <IconBrandDiscord stroke={2} />
+                <label id="discord_id"> _werzen</label>
+            </label>
+            <a href="mailto:zenwerden@gmail.com" id="email">
+                <IconMail stroke={2} />
+            </a>
+        </ul>
+    </main>
+</Layout>
