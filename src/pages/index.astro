@@ -1,25 +1,38 @@
 ---
-import '../styles/global.css';
-// Component Imports
-import Button from '../components/Button.astro';
-
-// Full Astro Component Syntax:
-// https://docs.astro.build/basics/astro-components/
+import "../styles/global.css";
+import { Button } from "@/components/ui/button";
+import Layout from "../layouts/Layout.astro";
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro + TailwindCSS</title>
-	</head>
+<Layout>
+    <main
+        class="p-4 flex flex-col flex-wrap lg:p-16 absolute md:p-8 sm:p-2 z-10 overflow-hidden bg-black h-dvh w-full dark justify-between"
+        id="main"
+    >
+        <div class="-mt-10 -ml-2">
+            <a href="https://github.com/wer-zen">
+                <img
+                    src="/public/svgs/logogray.svg"
+                    alt="Logo"
+                    height="400"
+                    width="400"
+                />
+            </a>
+        </div>
 
-	<body>
-		<div class="grid place-items-center h-screen content-center">
-			<Button>Tailwind Button in Astro!</Button>
-			<a href="/markdown-page" class="p-4 underline">Markdown is also supported...</a>
-		</div>
-	</body>
-</html>
+        <div>
+            <h1 class="text-[#ffffff]">Welcome to my portfolio!</h1>
+        </div>
+
+        <div
+            class="flex flex-initial items-start justify-start direction-row gap-4"
+        >
+            <a href="/src/pages/whoami.astro"
+                ><Button size="lg" variant="outline">Who Am I?</Button></a
+            >
+            <a href="mailto:zenwerden@gmail.com"
+                ><Button size="lg" variant="outline">Contact</Button></a
+            >
+        </div>
+    </main>
+</Layout>
