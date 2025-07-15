@@ -1,0 +1,33 @@
+---
+import "../styles/global.css";
+import { Button } from "@/components/ui/button";
+import Layout from "../layouts/Layout.astro";
+import Background from "../assets/Background.astro";
+import Blur from "../assets/Blur.astro";
+---
+
+<Layout>
+    <main
+        class="p-4 flex overflow-hidden flex-col flex-wrap lg:p-16 relative md:p-8 sm:p-2 z-10 bg-transparent h-dvh w-full dark justify-between items-center"
+        id="main"
+    >
+        <Blur />
+        <Background />
+        <div class="-mt-10 -ml-2"></div>
+
+        <div class="">
+            <h1 class="text-[#ffffff]">Welcome to my portfolio!</h1>
+        </div>
+
+        <div
+            class="flex flex-initial items-start justify-start direction-row gap-4"
+        >
+            <a href="/src/pages/whoami.astro"
+                ><Button size="lg" variant="outline">Who Am I?</Button></a
+            >
+            <a href="mailto:zenwerden@gmail.com"
+                ><Button size="lg" variant="outline">Contact</Button></a
+            >
+        </div>
+    </main>
+</Layout>

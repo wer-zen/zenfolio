@@ -1,0 +1,169 @@
+---
+import "../styles/global.css";
+---
+
+<body>
+    <div id="container" class="dark">
+        <div class="tile"></div>
+    </div>
+    <div class="h-20 w-20 bg-foreground"></div>
+</body><style>
+    :root {
+        --set-1-red-rgb: 241 250 238;
+        --set-1-blue-rgb: 168, 218, 220;
+        --set-1-green-rgb: 69, 123, 157;
+        --set-1-yellow-rgb: 29, 53, 87;
+
+        --set-2-red-rgb: 246, 81, 29;
+        --set-2-blue-rgb: 0, 166, 237;
+        --set-2-green-rgb: 127, 184, 0;
+        --set-2-yellow-rgb: 255, 180, 0;
+
+        --set-3-dark-cyan-rgb: 8, 76, 97;
+        --set-3-red-rgb: 219, 58, 52;
+        --set-3-cyan-rgb: 23, 126, 137;
+        --set-3-yellow-rgb: 255, 200, 87;
+    }
+
+    body {
+        height: 100vh;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        perspective: 4000px;
+    }
+
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    #container {
+        width: 70%;
+        aspect-ratio: 1;
+        display: grid;
+        grid-template-rows: repeat(40, 1fr);
+        grid-template-columns: repeat(40, 1fr);
+        position: absolute;
+        transform: rotateX(50deg) rotateY(-5deg) rotateZ(30deg) scale(1.25);
+        z-index: 1;
+    }
+
+    #container:after,
+    #container:before {
+        content: "";
+        position: absolute;
+        inset: 0px;
+        pointer-events: none;
+    }
+
+    #container:after {
+        z-index: 3;
+        background: radial-gradient(
+            circle,
+            transparent 5%,
+            rgb(var(--background-rgb)) 80%
+        );
+    }
+
+    .tile {
+        border: 0.05px solid rgba(var(--border));
+    }
+
+    .tile:hover {
+        transition-duration: 0ms;
+    }
+
+    .tile:nth-child(4n):hover {
+        background-color: rgb(var(--set-3-red-rgb));
+    }
+
+    .tile:nth-child(4n + 1):hover {
+        background-color: rgb(var(--set-3-dark-cyan-rgb));
+    }
+
+    .tile:nth-child(4n + 2):hover {
+        background-color: rgb(var(--set-3-cyan-rgb));
+    }
+
+    .tile:nth-child(4n + 3):hover {
+        background-color: rgb(var(--set-3-yellow-rgb));
+    }
+
+    .tile:nth-child(7n):hover {
+        background-color: rgb(var(--set-3-dark-cyan-rgb));
+    }
+
+    .tile:nth-child(7n + 3):hover {
+        background-color: rgb(var(--set-3-cyan-rgb));
+    }
+
+    .tile:nth-child(7n + 5):hover {
+        background-color: rgb(var(--set-3-yellow-rgb));
+    }
+
+    .tile:nth-child(7n + 6):hover {
+        background-color: rgb(var(--set-3-red-rgb));
+    }
+
+    .tile:nth-child(11n + 1):hover {
+        background-color: rgb(var(--set-3-red-rgb));
+    }
+
+    .tile:nth-child(11n + 4):hover {
+        background-color: rgb(var(--set-3-dark-cyan-rgb));
+    }
+
+    .tile:nth-child(11n + 7):hover {
+        background-color: rgb(var(--set-3-cyan-rgb));
+    }
+
+    .tile:nth-child(11n + 10):hover {
+        background-color: rgb(var(--set-3-yellow-rgb));
+    }
+</style>
+
+<script>
+    const container = document.querySelector("#container");
+    const tile = document.querySelector(".tile");
+
+    if (container && tile) {
+        for (let i = 0; i < 1599; i++) {
+            const newTile = tile.cloneNode(true); // safe, since tile is non-null
+            container.appendChild(newTile);
+        }
+    }
+
+    // Store the last 5 hovered tile elements
+    const tile_list: HTMLElement[] = [];
+    container?.querySelectorAll(".tile").forEach((tile) => {
+        tile.addEventListener("mouseenter", () => {
+            tile_list.push(tile);
+
+            // If more than 5
+            var limit = 40;
+            if (tile_list.length >= limit) {
+                tile_list.shift();
+            }
+
+            // Apply opacity gradient based on index
+            tile_list.forEach((t, index) => {
+                const computedColor = getComputedStyle(t).backgroundColor;
+
+                const rgbMatch = computedColor.match(
+                    /rgba?\((\d+),\s*(\d+),\s*(\d+)/,
+                );
+                if (rgbMatch) {
+                    const [_, r, g, b] = rgbMatch;
+                    const opacity = 1 / limit + (index * 1) / limit;
+                    t.style.backgroundColor = `rgba(${r}, ${g}, ${b}, ${opacity})`;
+                }
+            });
+        });
+
+        tile.addEventListener("mouseleave", () => {});
+    });
+</script>

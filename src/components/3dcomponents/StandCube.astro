@@ -1,0 +1,75 @@
+<script>
+    import * as THREE from "../../assets/three/build/three.module.js";
+
+    var vertexShader = `
+        varying vec2 vUv;
+        void main()	{
+          vUv = uv;
+          gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0);
+        }
+      `;
+    var fragmentShader = `
+		//#extension GL_OES_standard_derivatives : enable
+
+        varying vec2 vUv;
+        uniform float thickness;
+
+        float edgeFactor(vec2 p){
+        	vec2 grid = abs(fract(p - 0.5) - 0.5) / fwidth(p) / thickness;
+      		return min(grid.x, grid.y);
+        }
+
+        void main() {
+
+          float a = edgeFactor(vUv);
+
+          vec3 c = mix(vec3(1), vec3(0), a);
+
+          gl_FragColor = vec4(c, 1.0);
+        }
+      `;
+
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(
+        75,
+        window.innerWidth / window.innerHeight,
+        0.1,
+        1000,
+    );
+
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setAnimationLoop(animate);
+    document.body.appendChild(renderer.domElement);
+
+    const geometry = new THREE.BoxGeometry(1, 1, 1);
+    const material = new THREE.ShaderMaterial({
+        color: 0x00ff00,
+        uniforms: {
+            thickness: {
+                value: 1,
+            },
+        },
+        vertexShader: vertexShader,
+        fragmentShader: fragmentShader,
+    });
+    const cube = new THREE.Mesh(geometry, material);
+    scene.add(cube);
+
+    camera.position.z = 5;
+
+    function animate() {
+        cube.rotation.x += 0.01;
+        cube.rotation.y += 0.01;
+
+        renderer.render(scene, camera);
+    }
+
+    renderer.domElement.style.position = "absolute";
+    renderer.domElement.style.top = "0";
+    renderer.domElement.style.left = "0";
+    renderer.domElement.style.width = "100%";
+    renderer.domElement.style.height = "100%";
+    renderer.domElement.style.zIndex = "1";
+    renderer.domElement.style.pointerEvents = "none";
+</script>
